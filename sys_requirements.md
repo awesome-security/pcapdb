@@ -7,19 +7,19 @@ __The version numbers listed are the versions that the system was tested on.__
 # The mostly short version
 
 ## On Debian/Ubuntu
-On all nodes:
+On all nodes (in Ubuntu 18.04 enable the partner repository before running the below)
  - `apt install -y postgresql postgresql-server-dev-all tshark python3 python3-pip python3-dev virtualenv uwsgi-plugin-python3 libsasl2-dev libldap2-dev supervisor dkms`
 
 On the search head:
  - `apt install -y rabbitmq-server nginx`
 
 On the capture nodes:
- - `apt install -y librabbitmq4 ethtool`
+ - `apt install -y librabbitmq4 ethtool xfsprogs mdadm`
 
 If you're building from source:
  - `apt install -y cmake libnuma-dev libssl-dev libhugetlbfs-dev libpcap-dev`
 
-You'll also need the pfring packages from http://packages.ntop.org
+You'll also need the pfring packages from http://packages.ntop.org . On Ubuntu 18.04 you must modify the /etc/apt/sources.list.d/ntop-stable.list file to change 18.04 default back to 16.04 as no 18.04 packages exist. 
  - x86\_64/PF\_RING/pfring 
  - all/pfring-dkms 
 
@@ -87,6 +87,8 @@ We use nginx to server the interface.
 We need to talk to the rabbitmq server, and probe network interfaces.
  - librabbitmq
  - ethtool
+ - mdadm (For building RAIDS)
+ - xfsprogs (For creating xfs file sytems)
 
 ## PFRING
 For pfring, ntop.org provides RPM's and DEB's at http://packages.ntop.org/

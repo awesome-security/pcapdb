@@ -10,7 +10,7 @@ import time
 
 # This file sites in the project in core/bin/. We need to add
 # the path to core/ to the python path
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.settings")
 import django
@@ -31,7 +31,7 @@ def main():
         # Exits when killed
         # Only do this check every five seconds.
         time.sleep(REFRESH_RATE)
-        
+
         try:
             status.refresh_from_db()
         except status.DoesNotExist:
@@ -57,9 +57,9 @@ def main():
                 # Capture should be started, but isn't
                 log.info("Capture was supposed to be running, but wasn't: {}".format(cap_status[1]))
                 status.start_capture()
+                log.info("Capture status message: {}".format(status.running_message))
         else:
             log.error("Invalid capture mode: {}".format(status.capture))
 
 if __name__ == '__main__':
     main()
-
